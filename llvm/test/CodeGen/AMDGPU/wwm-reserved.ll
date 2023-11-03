@@ -123,8 +123,7 @@ define amdgpu_kernel void @call(<4 x i32> inreg %tmp14, i32 inreg %arg) {
 ; GFX9-O0: v_add_u32_e64 v1, v1, v2
   %tmp136 = add i32 %tmp134, %tmp107
   %tmp137 = tail call i32 @llvm.amdgcn.wwm.i32(i32 %tmp136)
-; GFX9-O0: buffer_store_dword v3
-; GFX9-O3: buffer_store_dword v0
+; GFX9: buffer_store_dword v0
   call void @llvm.amdgcn.raw.buffer.store.i32(i32 %tmp137, <4 x i32> %tmp14, i32 4, i32 0, i32 0)
   ret void
 }
@@ -315,8 +314,7 @@ define amdgpu_kernel void @strict_wwm_call(<4 x i32> inreg %tmp14, i32 inreg %ar
 ; GFX9-O0: v_add_u32_e64 v1, v1, v2
   %tmp136 = add i32 %tmp134, %tmp107
   %tmp137 = tail call i32 @llvm.amdgcn.strict.wwm.i32(i32 %tmp136)
-; GFX9-O0: buffer_store_dword v3
-; GFX9-O3: buffer_store_dword v0
+; GFX9: buffer_store_dword v0
   call void @llvm.amdgcn.raw.buffer.store.i32(i32 %tmp137, <4 x i32> %tmp14, i32 4, i32 0, i32 0)
   ret void
 }
