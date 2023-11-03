@@ -44,17 +44,17 @@ body:             |
   ; SGPR_SPILL-LABEL: name: test
   ; SGPR_SPILL: bb.0:
   ; SGPR_SPILL:   [[VGPR:%[0-9]+]]:vgpr_32 = IMPLICIT_DEF
-  ; SGPR_SPILL:   [[VGPR]]:vgpr_32 = SI_SPILL_S32_TO_VGPR killed $sgpr10, 0, [[VGPR]]
+  ; SGPR_SPILL:   [[VGPR]]:vgpr_32 = V_WRITELANE_B32 killed $sgpr10, 0, [[VGPR]]
   ; SGPR_SPILL:   DBG_VALUE $noreg, 0
   ; SGPR_SPILL: bb.1:
-  ; SGPR_SPILL:   $sgpr10 = SI_RESTORE_S32_FROM_VGPR [[VGPR]], 0
+  ; SGPR_SPILL:   $sgpr10 = V_READLANE_B32 [[VGPR]], 0
   ; SGPR_SPILL:   S_ENDPGM 0
   ; PEI-LABEL: name: test
   ; PEI: bb.0:
   ; PEI:   renamable $[[VGPR:vgpr[0-9]+]] = IMPLICIT_DEF
-  ; PEI:   renamable $[[VGPR]] = SI_SPILL_S32_TO_VGPR killed $sgpr10, 0, killed $[[VGPR]]
+  ; PEI:   renamable $[[VGPR]] = V_WRITELANE_B32 killed $sgpr10, 0, killed $[[VGPR]]
   ; PEI: bb.1:
-  ; PEI:   $sgpr10 = SI_RESTORE_S32_FROM_VGPR $[[VGPR]], 0
+  ; PEI:   $sgpr10 = V_READLANE_B32 $[[VGPR]], 0
   ; PEI:   S_ENDPGM 0
   bb.0:
     renamable $sgpr10 = IMPLICIT_DEF
