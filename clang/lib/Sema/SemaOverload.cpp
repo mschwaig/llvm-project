@@ -1404,8 +1404,10 @@ bool Sema::IsOverload(FunctionDecl *New, FunctionDecl *Old,
     // Don't allow overloading of destructors.  (In theory we could, but it
     // would be a giant change to clang.)
     if (!isa<CXXDestructorDecl>(New)) {
-      CUDAFunctionTarget NewTarget = IdentifyCUDATarget(New),
-                         OldTarget = IdentifyCUDATarget(Old);
+      CUDAFunctionTarget NewTarget = IdentifyCUDATarget(
+                             New, isa<CXXConstructorDecl>(New)),
+                         OldTarget = IdentifyCUDATarget(
+                             Old, isa<CXXConstructorDecl>(New));
       if (NewTarget != CFT_InvalidTarget) {
         assert((OldTarget != CFT_InvalidTarget) &&
                "Unexpected invalid target.");
